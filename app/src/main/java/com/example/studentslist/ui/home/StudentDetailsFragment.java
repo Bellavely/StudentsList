@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
+
 import com.example.studentslist.model.Student;
 import com.example.studentslist.model.Model;
 import com.example.studentslist.R;
@@ -58,19 +60,6 @@ public class StudentDetailsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_student_details, container, false);
         String stId=StudentDetailsFragmentArgs.fromBundle(getArguments()).getStudentId();
-
-        Button editBtn = view.findViewById(R.id.details_edit_button);
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditStudentFragment frag = EditStudentFragment.newInstance(studentId);
-                FragmentTransaction tran = getParentFragmentManager().beginTransaction();
-                //tran.replace(R.id.base_frag_container,frag);
-                tran.addToBackStack("");
-                tran.commit();
-            }
-        });
-
         Student student = Model.instance.getStudentById(stId);
         if(student != null) {
             TextView nameTv = view.findViewById(R.id.details_studentName_tv);
@@ -81,6 +70,14 @@ public class StudentDetailsFragment extends Fragment {
             idTv.setText(student.getId());
             cb.setChecked(student.isFlag());
         }
+
+
+        Button editBtn = view.findViewById(R.id.details_edit_button);
+        editBtn.setOnClickListener((v)->{
+            Navigation.findNavController(v).navigate(StudentDetailsFragmentDirections.actionStudentDetailsFragment2ToEditStudentFragment(stId));
+        });
+
+
         return view;
     }
 }

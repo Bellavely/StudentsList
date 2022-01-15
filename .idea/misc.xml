@@ -8,11 +8,13 @@
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.1" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/activity_main.xml" value="0.2453125" />
-        <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/app_bar_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_create_student.xml" value="0.1" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_edit_student.xml" value="0.22" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_info.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_student_details.xml" value="0.1796875" />
         <entry key="..\:/Users/Bella Tamar/AndroidStudioProjects/StudentsList/app/src/main/res/layout/fragment_students_list_rv.xml" value="0.1" />

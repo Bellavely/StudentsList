@@ -11,11 +11,11 @@
         android:id="@+id/details_imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/avatar" />
@@ -54,6 +54,7 @@
         app:layout_constraintStart_toStartOf="@+id/details_name_textView"
         app:layout_constraintTop_toBottomOf="@id/details_name_textView" />
 
+
     <TextView
         android:id="@+id/details_studentId_tv"
         android:layout_width="0dp"
@@ -66,6 +67,7 @@
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/details_id_textView"
         app:layout_constraintEnd_toEndOf="@+id/details_studentName_tv"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/details_id_textView"
         tools:ignore="SpeakableTextPresentCheck" />
 
@@ -73,13 +75,13 @@
         android:id="@+id/details_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
         android:clickable="false"
         android:text="Attendance"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/details_id_textView"
         app:layout_constraintTop_toBottomOf="@+id/details_studentId_tv" />
-
 
     <Button
         android:id="@+id/details_edit_button"

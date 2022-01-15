@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
+
 import com.example.studentslist.model.Student;
 import com.example.studentslist.model.Model;
 import com.example.studentslist.R;
@@ -65,6 +67,7 @@ public class EditStudentFragment extends Fragment {
         idEt = view.findViewById(R.id.edit_studentId_et);
         cb = view.findViewById(R.id.edit_checkBox);
 
+        String stId = EditStudentFragmentArgs.fromBundle(getArguments()).getStudentId();
         Student student = Model.instance.getStudentById(studentId);
         if(student != null) {
             nameEt.setText(student.getName());
@@ -73,49 +76,27 @@ public class EditStudentFragment extends Fragment {
         }
 
         cancelBtn = (Button) view.findViewById(R.id.edit_cancel_button);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StudentDetailsFragment frag = StudentDetailsFragment.newInstance(studentId);
-                FragmentTransaction tran = getParentFragmentManager().beginTransaction();
-                //tran.replace(R.id.base_frag_container,frag);
-                tran.addToBackStack("");
-                tran.commit();
-            }
+        cancelBtn.setOnClickListener((v)->{
+            Navigation.findNavController(v).navigateUp();
         });
 
         deleteBtn = (Button) view.findViewById(R.id.edit_delete_button);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Model.instance.deleteStudentById(studentId);
-                StudentsListRvFragment frag = StudentsListRvFragment.newInstance();
-                FragmentTransaction tran = getParentFragmentManager().beginTransaction();
-                //tran.replace(R.id.base_frag_container,frag);
-                tran.addToBackStack("");
-                tran.commit();
-            }
+        deleteBtn.setOnClickListener((v)->{
+            Model.instance.deleteStudentById(stId);
+            Navigation.findNavController(v).navigate(EditStudentFragmentDirections.actionEditStudentFragmentToNavHome());
         });
-
         saveBtn = (Button) view.findViewById(R.id.edit_save_button);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                for (Student s: data) {
-                    if(s.getId().equals(studentId)) {
-                        Student student = new Student(nameEt.getText().toString(),idEt.getText().toString(),cb.isChecked());
-                        Model.instance.editStudent(studentId,student);
-                        studentId = s.getId();
-                        StudentsListRvFragment frag = StudentsListRvFragment.newInstance();
-                        FragmentTransaction tran = getParentFragmentManager().beginTransaction();
-                        //tran.replace(R.id.base_frag_container,frag);
-                        tran.addToBackStack("");
-                        tran.commit();
-
-                    }
+        saveBtn.setOnClickListener((v)->{
+            for (Student s: data) {
+                if (s.getId().equals(stId)) {
+                    Student editedStudent = new Student(nameEt.getText().toString(), idEt.getText().toString(), cb.isChecked());
+                    Model.instance.editStudent(stId, editedStudent);
+                    Navigation.findNavController(v).navigate(EditStudentFragmentDirections.actionEditStudentFragmentToNavHome());
+                    return;
                 }
             }
         });
+
         return view;
     }
 }
