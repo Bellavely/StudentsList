@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import com.example.studentslist.R;
@@ -19,15 +18,16 @@ import com.example.studentslist.model.Student;
 import  com.example.studentslist.model.Model;
 import java.util.List;
 
-public class CreateStudentFragment extends Fragment {
-    List<Student> data;
+public class AddStudentFragment extends Fragment {
+        EditText nameEt;
+        EditText idEt;
+        CheckBox cb;
+        ProgressBar progressBar;
 
-    public CreateStudentFragment() {
-        // Required empty public constructor
-    }
 
-    public static CreateStudentFragment newInstance() {
-        CreateStudentFragment fragment = new CreateStudentFragment();
+
+    public static AddStudentFragment newInstance() {
+        AddStudentFragment fragment = new AddStudentFragment();
         return fragment;
     }
 
@@ -41,15 +41,20 @@ public class CreateStudentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_student, container, false);
-        EditText nameEt = view.findViewById(R.id.new_studentName_et);
-        EditText idEt = view.findViewById(R.id.new_studentId_et);
-        CheckBox cb = view.findViewById(R.id.new_checkBox);
+        nameEt = view.findViewById(R.id.new_studentName_et);
+        idEt = view.findViewById(R.id.new_studentId_et);
+        cb = view.findViewById(R.id.new_checkBox);
+
+        progressBar=view.findViewById(R.id.main_progrees_bar);
+        progressBar.setVisibility(View.GONE);
 
         Button saveBtn = (Button) view.findViewById(R.id.new_save_button);
         saveBtn.setOnClickListener((v)->{
-            Student newStudent = new Student(nameEt.getText().toString(), idEt.getText().toString(), cb.isChecked());
-            Model.instance.addStudent(newStudent);
-            Navigation.findNavController(v).navigate(CreateStudentFragmentDirections.actionCreateStudentFragmentToNavHome());
+            progressBar.setVisibility(view.VISIBLE);
+            Student student = new Student(nameEt.getText().toString(), idEt.getText().toString(), cb.isChecked());
+            Model.instance.addStudent(student,()->{
+               Navigation.findNavController(nameEt).navigateUp();
+            });
             return;
         });
 
@@ -60,4 +65,5 @@ public class CreateStudentFragment extends Fragment {
 
         return view;
     }
+
 }

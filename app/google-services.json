@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "804937758071",
+    "project_id": "studentlistex5",
+    "storage_bucket": "studentlistex5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804937758071:android:c90e6d8cf64015fbd15d72",
+        "android_client_info": {
+          "package_name": "com.example.studentslist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804937758071-0qrcueh65je5lmpirr3upur96dkrhd6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZeQZfb2Xfxk3iEBOZqnxulPj2Txz9nOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804937758071-0qrcueh65je5lmpirr3upur96dkrhd6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

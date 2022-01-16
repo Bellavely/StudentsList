@@ -6,11 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,19 +28,11 @@ public class StudentsListRvFragment extends Fragment {
 
     List<Student> data;
     Button newBtn;
+    MyAdapter adapter;
+    ProgressBar progressBar;
 
     public StudentsListRvFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    public static StudentsListRvFragment newInstance() {
-        StudentsListRvFragment fragment = new StudentsListRvFragment();
-        return fragment;
     }
 
     @Nullable
@@ -46,18 +40,19 @@ public class StudentsListRvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_students_list_rv,container,false);
 
-        data = Model.instance.getAllStudents();
-
+        progressBar=view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(view.GONE);
         RecyclerView list = view.findViewById(R.id.studentslist_rv);
         list.setHasFixedSize(true);
+
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        MyAdapter adapter = new MyAdapter();
+        adapter = new MyAdapter();
         list.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 String stId = data.get(position).getId();
-              Navigation.findNavController(view).navigate(StudentsListRvFragmentDirections.actionNavHomeToStudentDetailsFragment2(stId));
+              Navigation.findNavController(view).navigate((NavDirections)StudentsListRvFragmentDirections.actionNavHomeToStudentDetailsFragment2(stId));
             }
         });
 
@@ -65,8 +60,19 @@ public class StudentsListRvFragment extends Fragment {
         newBtn.setOnClickListener((v)->
            Navigation.findNavController(v).navigate(StudentsListRvFragmentDirections.actionNavHomeToCreateStudentFragment()));
         setHasOptionsMenu(true);
+        refresh();
         return view;
     }
+
+    private void refresh() {
+        progressBar.setVisibility(View.VISIBLE);
+        Model.instance.getAllStudents((list)->{
+            data=list;
+            adapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
+        });
+    }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView nameTv;
@@ -125,6 +131,8 @@ public class StudentsListRvFragment extends Fragment {
 
         @Override
         public int getItemCount() {
+            if (data==null)
+                return 0;
             return data.size();
         }
     }

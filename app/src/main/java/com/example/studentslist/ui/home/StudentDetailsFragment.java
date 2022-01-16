@@ -22,11 +22,12 @@ import java.util.List;
 
 public class StudentDetailsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    TextView nameTv;
+    TextView idTv;
+    CheckBox cb;
+
     private static final String ARG_STUDENT_ID = "student_id";
 
-    // TODO: Rename and change types of parameters
     private String studentId;
 
     public StudentDetailsFragment() {
@@ -60,17 +61,18 @@ public class StudentDetailsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_student_details, container, false);
         String stId=StudentDetailsFragmentArgs.fromBundle(getArguments()).getStudentId();
-        Student student = Model.instance.getStudentById(stId);
-        if(student != null) {
-            TextView nameTv = view.findViewById(R.id.details_studentName_tv);
-            TextView idTv = view.findViewById(R.id.details_studentId_tv);
-            CheckBox cb = view.findViewById(R.id.details_checkBox);
 
-            nameTv.setText(student.getName());
-            idTv.setText(student.getId());
-            cb.setChecked(student.isFlag());
-        }
-
+        Model.instance.getStudentById(stId, new Model.GetStudentById() {
+            @Override
+            public void onComplete(Student student) {
+                nameTv.setText(student.getName());
+                idTv.setText(student.getId());
+                cb.setChecked(student.isFlag());
+            }
+        });
+             nameTv = view.findViewById(R.id.details_studentName_tv);
+             idTv = view.findViewById(R.id.details_studentId_tv);
+             cb = view.findViewById(R.id.details_checkBox);
 
         Button editBtn = view.findViewById(R.id.details_edit_button);
         editBtn.setOnClickListener((v)->{

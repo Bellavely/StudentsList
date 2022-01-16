@@ -60,7 +60,7 @@ public class EditStudentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        data = Model.instance.getAllStudents();
+        //data = Model.instance.getAllStudents();
 
         View view = inflater.inflate(R.layout.fragment_edit_student, container, false);
         nameEt = view.findViewById(R.id.edit_studentName_et);
@@ -68,12 +68,15 @@ public class EditStudentFragment extends Fragment {
         cb = view.findViewById(R.id.edit_checkBox);
 
         String stId = EditStudentFragmentArgs.fromBundle(getArguments()).getStudentId();
-        Student student = Model.instance.getStudentById(studentId);
-        if(student != null) {
-            nameEt.setText(student.getName());
-            idEt.setText(student.getId());
-            cb.setChecked(student.isFlag());
-        }
+       Model.instance.getStudentById(studentId, new Model.GetStudentById() {
+           @Override
+           public void onComplete(Student student) {
+               nameEt.setText(student.getName());
+               idEt.setText(student.getId());
+               cb.setChecked(student.isFlag());
+           }
+       });
+
 
         cancelBtn = (Button) view.findViewById(R.id.edit_cancel_button);
         cancelBtn.setOnClickListener((v)->{
@@ -82,19 +85,23 @@ public class EditStudentFragment extends Fragment {
 
         deleteBtn = (Button) view.findViewById(R.id.edit_delete_button);
         deleteBtn.setOnClickListener((v)->{
-            Model.instance.deleteStudentById(stId);
+            Model.instance.deleteStudentById(stId, new Model.DeleteStudentListenner() {
+                @Override
+                public void onComplete() {
+
+                }
+            });
             Navigation.findNavController(v).navigate(EditStudentFragmentDirections.actionEditStudentFragmentToNavHome());
         });
         saveBtn = (Button) view.findViewById(R.id.edit_save_button);
         saveBtn.setOnClickListener((v)->{
-            for (Student s: data) {
-                if (s.getId().equals(stId)) {
                     Student editedStudent = new Student(nameEt.getText().toString(), idEt.getText().toString(), cb.isChecked());
-                    Model.instance.editStudent(stId, editedStudent);
+                    Model.instance.editStudent(stId, editedStudent, new Model.EditStudentListenner() {
+                        @Override
+                        public void onComplete() { }
+                    });
                     Navigation.findNavController(v).navigate(EditStudentFragmentDirections.actionEditStudentFragmentToNavHome());
                     return;
-                }
-            }
         });
 
         return view;

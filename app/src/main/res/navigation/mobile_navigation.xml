@@ -40,9 +40,9 @@
     </fragment>
     <fragment
         android:id="@+id/createStudentFragment"
-        android:name="com.example.studentslist.ui.home.CreateStudentFragment"
-        android:label="fragment_create_student"
-        tools:layout="@layout/fragment_create_student" >
+        android:name="com.example.studentslist.ui.home.AddStudentFragment"
+        android:label="Add New Student"
+        tools:layout="@layout/fragment_create_student">
         <action
             android:id="@+id/action_createStudentFragment_to_nav_home"
             app:destination="@id/nav_home" />
@@ -60,5 +60,5 @@
         <action
             android:id="@+id/action_editStudentFragment_to_nav_home"
             app:destination="@id/nav_home" />
-    </fragment>
+    </fragment><action android:id="@+id/action_global_createStudentFragment" app:destination="@id/createStudentFragment"/>
 </navigation>

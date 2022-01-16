@@ -1,8 +1,20 @@
 package com.example.studentslist.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Entity
 public class Student {
-    String name;
-    String id;
+    final public static String CollectionName="students";
+    @PrimaryKey
+    @NonNull
+    String id="";
+    String name="";
     boolean flag;
 
     public Student() {
@@ -15,6 +27,14 @@ public class Student {
         this.name = name;
         this.id = id;
         this.flag = flag;
+    }
+
+    public static Student create(Map<String, Object> json) {
+        String id= (String) json.get("id");
+        String name=(String) json.get("name");
+        Boolean flag=(Boolean) json.get("flag");
+        Student student= new Student(name,id,flag);
+        return student;
     }
 
     public void setName(String name) {
@@ -39,5 +59,13 @@ public class Student {
 
     public boolean isFlag() {
         return flag;
+    }
+
+    public Map<String, Object> toJson() {
+        Map<String,Object> Json = new HashMap<String,Object>();
+        Json.put("id",id);
+        Json.put("name",name);
+        Json.put("flag",flag);
+        return  Json;
     }
 }

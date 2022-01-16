@@ -1,53 +1,60 @@
 package com.example.studentslist.model;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.core.os.HandlerCompat;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class Model {
-    List<Student> data = new ArrayList<Student>();
     public static final Model instance = new Model();
+    Executor executor=Executors.newFixedThreadPool(1);
+    Handler mainThread = HandlerCompat.createAsync(Looper.getMainLooper());
 
+    ModelFirebase modelFirebase=new ModelFirebase();
     private Model(){
-        for(int i=0; i<10; i++){
-            Student s = new Student("name",""+i,false);
-            data.add(s);
-        }
+
     }
 
-    public List<Student> getAllStudents() {
-        return data;
+    public interface GetAllStudentsListenner{
+        void onComplete(List<Student> list);
+    }
+    public interface  GetStudentById{
+        void onComplete(Student student);
+    }
+    public interface AddStudentListenner{
+        void onComplete();
+    }
+    public interface DeleteStudentListenner{
+        void onComplete();
+    }
+    public interface EditStudentListenner{
+        void onComplete();
     }
 
-    public void addStudent(Student student) {
-        data.add(student);
+
+    public void getAllStudents(GetAllStudentsListenner listenner) {
+        modelFirebase.getAllStudents(listenner);
     }
 
-    public Student getStudentById(String studentId) {
-        for (Student s:data) {
-            if(s.getId().equals(studentId)) {
-                return s;
-            }
-        }
-        return null;
+
+    public void addStudent(Student student,AddStudentListenner listener) {
+        modelFirebase.addStudent(student,listener);
     }
 
-    public void editStudent(String studentId,Student s){
-        for (int i=0; i<data.size(); i++) {
-            if(data.get(i).getId().equals(studentId)) {
-                data.get(i).setName(s.getName());
-                data.get(i).setId(s.getId());
-                data.get(i).setFlag(s.isFlag());
-                return;
-            }
-        }
+    public void getStudentById(String studentId, GetStudentById listener) {
+        modelFirebase.getStudentById( studentId ,listener);
     }
 
-    public void deleteStudentById(String studentId) {
-        for (int i=0; i<data.size(); i++) {
-            if(data.get(i).getId().equals(studentId)) {
-                data.remove(i);
-                return;
-            }
-        }
+    public void editStudent(String studentId,Student s,EditStudentListenner listener){
+    modelFirebase.editStudent( studentId, s,listener);
+    }
+
+    public void deleteStudentById(String studentId,DeleteStudentListenner listener) {
+    modelFirebase.deleteStudentById(studentId,listener);
     }
 }
